@@ -11,7 +11,7 @@ list_system_modules:
     is_install: true
   - name: python-pycurl
     is_install: true
-  - name: @development
+  - name: "@development"
     is_install: true
   - name: unzip
     is_install: true
