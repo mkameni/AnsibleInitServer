@@ -14,10 +14,6 @@
       when: item.is_install == true
       with_items: "{{ list_system_modules }}"
 
-    - include: tasks/initialization.yml
-      when: server_init
-
-
   # roles:
   #   - { role: xxxx }
 
