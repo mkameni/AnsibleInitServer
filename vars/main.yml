@@ -1,0 +1,39 @@
+---
+server_init: true
+ansible_distribution_major_version: 7
+
+list_system_modules:
+  - name: epel-release
+    is_install: true
+  - name: libsemanage-python
+    is_install: true
+  - name: curl
+    is_install: true
+  - name: python-pycurl
+    is_install: true
+  - name: @development
+    is_install: true
+  - name: unzip
+    is_install: true
+  - name: vim
+    is_install: true
+  - name: nano
+    is_install: true
+  - name: htop
+    is_install: true
+  - name: atop
+    is_install: true
+  - name: wget
+    is_install: true
+  - name: iptraf-ng
+    is_install: true
+  - name: openssl-devel
+    is_install: true
+  - name: gcc
+    is_install: true
+  - name: curl-devel
+    is_install: true
+  - name: zlib-devel
+    is_install: true
+  - name: pcre-devel
+    is_install: true

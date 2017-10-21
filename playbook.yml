@@ -1,0 +1,54 @@
+---
+- hosts: stage
+  become: yes
+
+  vars_files:
+    - vars/main.yml
+
+  pre_tasks:
+    - name: install required system modules and Get software for Python-based control.
+      yum:
+        name: "{{ item.name }}"
+        state: installed
+        update_cache: yes
+      when: item.is_install == true
+      with_items: "{{ list_system_modules }}"
+
+    - include: tasks/initialization.yml
+      when: server_init
+
+
+  # roles:
+  #   - { role: xxxx }
+
+
+  tasks:
+    - name: initialization of the server
+      block:
+        - name: Update hostname
+          template:
+            src: templates/hostname.j2
+            dest: "/etc/hostname"
+            force: yes
+            owner: root
+            group: root
+            mode: 0644
+
+        - name: Restart server
+          shell: sleep 2 && /sbin/shutdown -r now "Ansible change hostname"
+          async: 1
+          poll: 0
+
+        - name: "Wait for reboot"
+          local_action: wait_for host={{ ansible_default_ipv4.address }} port=22 delay=10 state=started
+          become: false
+
+        - name: Update /etc/hosts from inventory
+          template:
+            src: templates/hosts.j2
+            dest: "/etc/hosts"
+            force: yes
+            owner: root
+            group: root
+            mode: 0644
+      when: server_init
